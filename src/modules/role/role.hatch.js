@@ -1,5 +1,13 @@
 
 var roleHatch = {
+
+  // 矿工数量
+  harvesterCount: 5,
+  // 升级工数量
+  upgraderCount: 4,
+  // 建造工数量
+  builderCount: 5,
+
   run: function () {
     for (var name in Memory.creeps) {
       if (!Game.creeps[name]) {
@@ -8,20 +16,31 @@ var roleHatch = {
       }
     }
 
-    var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    console.log('矿工数量: ' + harvesters.length);
 
-    if (harvesters.length < 3) {
-      var newName = `矿工${harvesters.length + 1}号`;
-      console.log('正在孵化: ' + newName);
-      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], newName,
+
+    // 孵化旷工
+    _.difference(_.range(1, this.harvesterCount + 1).map(number => `旷${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
+      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
         { memory: { role: 'harvester' } });
-    }
+    })
+
+    // 孵化升级工
+    _.difference(_.range(1, this.upgraderCount + 1).map(number => `升${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
+      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
+        { memory: { role: 'upgrader' } });
+    })
+
+    // 孵化建造工
+    _.difference(_.range(1, this.builderCount + 1).map(number => `建${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
+      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
+        { memory: { role: 'builder' } });
+    })
+
 
     if (Game.spawns['Spawn1'].spawning) {
       var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
       Game.spawns['Spawn1'].room.visual.text(
-        '🛠️' + '正在孵化: ' + newName,
+        '🛠️' + '正在孵化: ' + spawningCreep.name,
         Game.spawns['Spawn1'].pos.x + 1,
         Game.spawns['Spawn1'].pos.y,
         { align: 'left', opacity: 0.8 });
