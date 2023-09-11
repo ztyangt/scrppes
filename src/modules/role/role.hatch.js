@@ -1,12 +1,7 @@
+const roleCtl = require('controller.role')
+
 
 var roleHatch = {
-
-  // 矿工数量
-  harvesterCount: 5,
-  // 升级工数量
-  upgraderCount: 4,
-  // 建造工数量
-  builderCount: 5,
 
   run: function () {
     for (var name in Memory.creeps) {
@@ -18,22 +13,22 @@ var roleHatch = {
 
 
 
-    // 孵化旷工
-    _.difference(_.range(1, this.harvesterCount + 1).map(number => `旷${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
-      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
-        { memory: { role: 'harvester' } });
-    })
-
     // 孵化升级工
-    _.difference(_.range(1, this.upgraderCount + 1).map(number => `升${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
+    _.difference(_.range(1, roleCtl.count.upgrader + 1).map(number => `升级工${number}号`), Object.keys(Game.creeps)).reverse().forEach(item => {
       Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
         { memory: { role: 'upgrader' } });
     })
 
     // 孵化建造工
-    _.difference(_.range(1, this.builderCount + 1).map(number => `建${number}`), Object.keys(Game.creeps)).reverse().forEach(item => {
+    _.difference(_.range(1, roleCtl.count.builder + 1).map(number => `建造工${number}号`), Object.keys(Game.creeps)).reverse().forEach(item => {
       Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
         { memory: { role: 'builder' } });
+    })
+
+    // 孵化旷工
+    _.difference(_.range(1, roleCtl.count.harvester + 1).map(number => `旷工${number}号`), Object.keys(Game.creeps)).reverse().forEach(item => {
+      Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], item,
+        { memory: { role: 'harvester' } });
     })
 
 

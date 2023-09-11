@@ -1,3 +1,6 @@
+const roleCtl = require('controller.role')
+const roleHarvester = require('work.harvester');
+
 var roleBuilder = {
 
   /** 
@@ -15,11 +18,16 @@ var roleBuilder = {
     }
 
     if (creep.memory.building) {
-      var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-      if (targets.length) {
+
+      const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+      if (roleCtl.liveCount.harvester > 2 && targets.length) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
           creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        } else {
+          creep.say("加油🧱")
         }
+      } else {
+        roleHarvester.run(creep)
       }
     }
     else {

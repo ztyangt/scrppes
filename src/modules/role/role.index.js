@@ -1,8 +1,10 @@
-var roleHatch = require('role.hatch');
+const roleHatch = require('role.hatch');
+const roleCtl = require('controller.role')
 
-var roleInit = {
+const roleInit = {
 
-  init: function (creep) {
+  init: function () {
+    roleCtl.getLiveCount()
     roleHatch.run()
   }
 };
