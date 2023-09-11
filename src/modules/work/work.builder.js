@@ -1,5 +1,6 @@
 const roleCtl = require('controller.role')
-const roleHarvester = require('work.harvester');
+const roleUpgrader = require('work.upgrader')
+
 
 var roleBuilder = {
 
@@ -26,8 +27,9 @@ var roleBuilder = {
         } else {
           creep.say("加油🧱")
         }
-      } else {
-        roleHarvester.run(creep)
+      }
+      else {
+        roleUpgrader.run(creep)
       }
     }
     else {

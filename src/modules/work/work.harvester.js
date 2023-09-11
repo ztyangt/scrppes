@@ -1,6 +1,6 @@
 
 
-const roleUpgrader = require('work.upgrader')
+const rolebuilder = require('work.builder')
 var roleHarvester = {
 
   /** 
@@ -35,7 +35,8 @@ var roleHarvester = {
           creep.say("🩸回血")
         }
       } else {
-        roleUpgrader.run(creep)
+        // roleUpgrader.run(creep)
+        rolebuilder.run(creep)
       }
 
     }
